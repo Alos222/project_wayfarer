@@ -10,4 +10,4 @@ class wfUser(models.Model):
     country = models.CharField(max_length=100)
     date_joined = models.DateField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    profile_photo = ImageField(blank=True, manual_crop="")
+    img = ImageField(blank=True, manual_crop="")
