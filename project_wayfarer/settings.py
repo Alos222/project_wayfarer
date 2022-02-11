@@ -23,6 +23,9 @@ env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
 DB_USER = os.getenv('PSQL_USERNAME')
 DB_PWD = os.getenv('PSQL_PASSWORD')
+UC_PUBLIC = os.getenv('UPLOADCARE_PUBLICKEY')
+UC_SECRET = os.getenv('UPLOADCARE_SECRETKEY')
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main_app',
+    'pyuploadcare.dj',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +136,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+UPLOADCARE = {
+    'pub_key': UC_PUBLIC,
+    'secret': UC_SECRET
+}
