@@ -1,5 +1,9 @@
+from pyexpat import model
+from tkinter import Image
+from unittest.util import _MAX_LENGTH
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import CharField
 from pyuploadcare.dj.forms import ImageField 
 
 class Post(models.Model):
@@ -26,4 +30,10 @@ class wfUser(models.Model):
     country = models.CharField(max_length=100)
     date_joined = models.DateField(auto_now_add=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    img = ImageField(blank=True, manual_crop="")
+    
+class PointOfInterest(models.Model): 
+    name = models.CharField(max_length = 200)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="Location")
+    description = models.CharField(max_length=500)
     img = ImageField(blank=True, manual_crop="")
