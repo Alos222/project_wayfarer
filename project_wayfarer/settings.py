@@ -21,8 +21,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Setup env variables
 env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
-DB_USER = os.getenv('PSQL_USER1')
-# DB_PWD = os.getenv('PSQL_PASSWORD')
+DB_USER = os.getenv('PSQL_USERNAME')
+DB_PWD = os.getenv('PSQL_PASSWORD')
 UC_PUBLIC = os.getenv('UPLOADCARE_PUBLICKEY')
 UC_SECRET = os.getenv('UPLOADCARE_SECRETKEY')
 
