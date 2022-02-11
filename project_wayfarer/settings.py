@@ -11,9 +11,18 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Setup env variables
+env_path = Path('.')/'.env'
+load_dotenv(dotenv_path=env_path)
+DB_USER = os.getenv('PSQL_USERNAME')
+DB_PWD = os.getenv('PSQL_PASSWORD')
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +36,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main_app',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +84,10 @@ WSGI_APPLICATION = 'project_wayfarer.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wayfarer',
+        'USER' : DB_USER,
+        'PASSWORD': DB_PWD
     }
 }
 
