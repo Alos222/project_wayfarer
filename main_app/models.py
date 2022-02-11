@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from pyuploadcare.dj.forms import ImageField 
+from pyuploadcare.dj.models import ImageField 
 
 class WayfarerUser(models.Model):
     # username, password, email, firstname, lastname already used by Django
