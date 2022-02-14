@@ -3,6 +3,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+
+from main_app.forms import UserUpdateForm, ProfileUpdateForm
 from .models import Profile
 from django.contrib.auth.models import User
 
@@ -16,7 +19,7 @@ class About(TemplateView):
 class Discover(TemplateView):
     template_name = 'discover.html'
     
-class Profile(TemplateView):
+class ProfileView(TemplateView):
     template_name = 'profile.html'
     
     def get_context_data(self, **kwargs):
@@ -25,13 +28,26 @@ class Profile(TemplateView):
         context['profile'] = user.profile
         return context
     
-# class ProfileUpdate(UpdateView):
-#     template_name = 'profile_update.html'
-#     model = Profile
-#     fields = ['city', 'country', 'img']
-#     success_url = "/"
+class ProfileUpdate(UpdateView):
     
+    def get(self, request, **kwargs):
+        user_form = UserUpdateForm()
+        profile_form = ProfileUpdateForm()
+        context = {
+            'user_form' : user_form,
+            'profile_form' : profile_form
+        }
+        return render(request, 'profile_update.html', context)
     
+    def post(self, request, **kwargs):
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect('profile', kwargs['username'])
+        
 class Signup(View):
     def get(self, request):
         signup_form = UserCreationForm()
