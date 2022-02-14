@@ -2,7 +2,12 @@
 {% block content %}
     <h1>Discover Page</h1>
         {% for location in locations %}
-    
+    <div class="list_of_locations">
+        <div class="location">{{location.city}}
+            <p class="locationContent">{{location.country}}</p>
+        </div>
+     
+    </div>
         {% endfor %}
 
 {% endblock %}

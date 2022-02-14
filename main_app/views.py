@@ -4,9 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Profile, Location, Post
 from django.contrib.auth.models import User
-# Authorization
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+
 
 # Create your views here.
 class Home(TemplateView):
@@ -15,7 +13,6 @@ class Home(TemplateView):
 class About(TemplateView):
     template_name = 'about.html'
     
-@method_decorator(login_required, name='dispatch')
 class Discover(TemplateView):
     template_name = 'discover.html'
     
