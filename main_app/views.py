@@ -42,3 +42,14 @@ class Signup(View):
         else:
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
+
+
+
+class Postdetail:
+    def __init__(self, title, user, content, content_img, location):
+        self.title = title
+        self.user = user
+        self.content = content
+        self.content_img = content_img
+        self.location = location
+        
