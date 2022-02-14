@@ -142,3 +142,6 @@ UPLOADCARE = {
     'pub_key': UC_PUBLIC,
     'secret': UC_SECRET
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
