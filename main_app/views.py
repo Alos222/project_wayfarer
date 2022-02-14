@@ -1,8 +1,14 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, View, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+
+from django.contrib.auth.decorators import login_required
+
+from main_app.forms import UserUpdateForm, ProfileUpdateForm
 from .models import Profile, Location, Post
+
 from django.contrib.auth.models import User
 
 
@@ -15,17 +21,18 @@ class About(TemplateView):
     
 class Discover(TemplateView):
     template_name = 'discover.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        city = self.request.GET.get('city')
-        if city != None:
-            context['locations'] = Location.objects.filter(name__icontains=city)
-        else: 
-            context['locations'] = Location.objects.all()
-        return context
 
-class Profile(TemplateView):
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      city = self.request.GET.get('city')
+      if city != None:
+        context['locations'] = Location.objects.filter(name__icontains=city)
+      else: 
+        context['locations'] = Location.objects.all()
+      return context
+
+
+class ProfileView(TemplateView):
     template_name = 'profile.html'
     
     def get_context_data(self, **kwargs):
@@ -34,9 +41,36 @@ class Profile(TemplateView):
         context['profile'] = user.profile
         return context
     
-class Post(TemplateView):
-    template_name = 'single_post.html'
+class ProfileUpdate(UpdateView):
     
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated and request.user.username == kwargs['username']:
+            user_form = UserUpdateForm()
+            profile_form = ProfileUpdateForm()
+            context = {
+                'user_form' : user_form,
+                'profile_form' : profile_form
+            }
+            return render(request, 'profile_update.html', context)
+        else:
+            return redirect('/')
+    
+    def post(self, request, **kwargs):    
+        if request.user.is_authenticated:
+            if request.user.username != kwargs['username']:
+                return redirect('profile', kwargs['username'])
+            
+            user_form = UserUpdateForm(request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                return redirect('profile', kwargs['username'])
+            
+        else:
+            return redirect('/accounts/login')
+        
 class Signup(View):
     def get(self, request):
         signup_form = UserCreationForm()

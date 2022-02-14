@@ -7,6 +7,9 @@
         <h1>City: {{profile.city}}</h1>
         <h1>Country: {{profile.country}}</h1>
     </div>
-    
-
+    {% if user.is_authenticated and user.username == username %}
+        <a href="{% url 'profile_update' username%}">
+            <button class="button">Update</button>
+        </a>
+    {% endif %}
 {% endblock %}
