@@ -1,4 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Profile Page</h1>
+    <div>
+        <h1>{{username}}'s Profile Page</h1>
+    </div>
+    <div>
+        <h1>City: {{profile.city}}</h1>
+        <h1>Country: {{profile.country}}</h1>
+    </div>
+    
+
 {% endblock %}
