@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from .models import Profile
+from django.contrib.auth.models import User
 
 # Create your views here.
 class Home(TemplateView):
@@ -15,6 +17,12 @@ class Discover(TemplateView):
     
 class Profile(TemplateView):
     template_name = 'profile.html'
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        user = User.objects.get(username=context['username'])
+        context['profile'] = user.profile
+        return context
     
 class Post(TemplateView):
     template_name = 'single_post.html'

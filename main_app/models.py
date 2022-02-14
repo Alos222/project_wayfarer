@@ -6,7 +6,7 @@ from django.db.models.signals import post_save
 
 class Profile(models.Model):
     # username, password, email, firstname, lastname already used by Django
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     city = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     img = ImageField(blank=True, manual_crop="")
