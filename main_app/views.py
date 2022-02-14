@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, View, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from .models import Profile
@@ -24,8 +25,12 @@ class Profile(TemplateView):
         context['profile'] = user.profile
         return context
     
-class Post(TemplateView):
-    template_name = 'single_post.html'
+# class ProfileUpdate(UpdateView):
+#     template_name = 'profile_update.html'
+#     model = Profile
+#     fields = ['city', 'country', 'img']
+#     success_url = "/"
+    
     
 class Signup(View):
     def get(self, request):
