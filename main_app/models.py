@@ -23,6 +23,7 @@ def save_profile(sender, instance, **kwargs):
 class Location (models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
+    description = models.CharField(max_length=250)
     img = ImageField(blank=True, manual_crop="")
     
 class Post(models.Model):
