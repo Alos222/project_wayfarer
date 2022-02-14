@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, CreateView, DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+
+from main_app.models import Post
 
 # Create your views here.
 class Home(TemplateView):
@@ -15,9 +17,14 @@ class Discover(TemplateView):
     
 class Profile(TemplateView):
     template_name = 'profile.html'
-    
-class Post(TemplateView):
-    template_name = 'single_post.html'
+class CreatePost(CreateView):
+    model = Post
+    fields = ['title', 'user', 'content', 'content_img', 'location']
+    template_name = 'create_post.html'
+    success_url = '/discover'
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
     
 class Signup(View):
     def get(self, request):
@@ -35,4 +42,3 @@ class Signup(View):
         else:
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
-        
