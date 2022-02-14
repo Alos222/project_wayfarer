@@ -39,14 +39,21 @@ class ProfileUpdate(UpdateView):
         }
         return render(request, 'profile_update.html', context)
     
-    def post(self, request, **kwargs):
-        user_form = UserUpdateForm(request.POST, instance=request.user)
-        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            return redirect('profile', kwargs['username'])
+    def post(self, request, **kwargs):    
+        if request.user.is_authenticated:
+            if request.user.username != kwargs['username']:
+                return redirect('profile', kwargs['username'])
+            
+            user_form = UserUpdateForm(request.POST, instance=request.user)
+            profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                return redirect('profile', kwargs['username'])
+            
+        else:
+            return redirect('/accounts/login')
         
 class Signup(View):
     def get(self, request):
