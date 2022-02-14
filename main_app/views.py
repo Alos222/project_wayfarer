@@ -1,5 +1,7 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, View
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 class Home(TemplateView):
@@ -16,3 +18,21 @@ class Profile(TemplateView):
     
 class Post(TemplateView):
     template_name = 'single_post.html'
+    
+class Signup(View):
+    def get(self, request):
+        signup_form = UserCreationForm()
+        context = {"form" : signup_form}
+        return render(request, "registration/signup.html", context)
+        
+    def post(self, request):
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("/user/{}".format(user.username))
+        
+        else:
+            context = {"signup_form": form}
+            return render(request, 'registration/signup.html', context)
+        
