@@ -3,11 +3,14 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+
 from django.contrib.auth.decorators import login_required
 
 from main_app.forms import UserUpdateForm, ProfileUpdateForm
-from .models import Profile
+from .models import Profile, Location, Post
+
 from django.contrib.auth.models import User
+
 
 # Create your views here.
 class Home(TemplateView):
@@ -18,7 +21,17 @@ class About(TemplateView):
     
 class Discover(TemplateView):
     template_name = 'discover.html'
-    
+
+    def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      city = self.request.GET.get('city')
+      if city != None:
+        context['locations'] = Location.objects.filter(name__icontains=city)
+      else: 
+        context['locations'] = Location.objects.all()
+      return context
+
+
 class ProfileView(TemplateView):
     template_name = 'profile.html'
     
