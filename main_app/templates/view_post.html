@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>View Post Page</h1>
+   <form>
+    <div id="main">
+        <div>
+        </div>
+    </div>
+</form>
+<div class="gallery">
+    {% for post in posts%}
+    <div class="card">
+        <img src="{{post.content_img}}"></img>
+        <p class="card-header-title">{{post.title}}</p>
+        <p>{{post.content}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
