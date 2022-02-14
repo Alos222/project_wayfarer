@@ -31,13 +31,16 @@ class ProfileView(TemplateView):
 class ProfileUpdate(UpdateView):
     
     def get(self, request, **kwargs):
-        user_form = UserUpdateForm()
-        profile_form = ProfileUpdateForm()
-        context = {
-            'user_form' : user_form,
-            'profile_form' : profile_form
-        }
-        return render(request, 'profile_update.html', context)
+        if request.user.is_authenticated and request.user.username == kwargs['username']:
+            user_form = UserUpdateForm()
+            profile_form = ProfileUpdateForm()
+            context = {
+                'user_form' : user_form,
+                'profile_form' : profile_form
+            }
+            return render(request, 'profile_update.html', context)
+        else:
+            return redirect('/')
     
     def post(self, request, **kwargs):    
         if request.user.is_authenticated:
