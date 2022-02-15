@@ -1,32 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
-    
-{% comment %} <div class="gallery">
-    {% for post in posts%}
-    <div class="card">
-        <img src="{{post.content_img}}"></img>
-        <p class="card-header-title">{{post.title}}</p>
-        <p>{{post.content}}</p>
-    </div>
-    {% endfor %}
-</div>
-{% endblock %} {% endcomment %}
-
-
-<!--   -->
-
 <div class="detail__img">
     <img src="{{post.content_img}}" alt="{{post.title}}" />
 </div>
 <div class="detail__name">
-    {% comment %} {% if post.verified_artist %}    <!--what should i put instead of verified_artist?-->
-    <div class="icon-text">
-        <span class="icon has-text-info">
-            <i class="fas fa-check-circle"></i>
-        </span>
-        <span>Verified</span>
-    </div>
-    {% endif %} {% endcomment %}
     <h1 class="title">{{post.title}}</h1>
 </div>
 <div class="detail__container">
@@ -53,7 +30,4 @@
             {{post.content}}
           </div>
 </div>
-
-
-
 {% endblock %} 

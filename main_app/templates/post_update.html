@@ -1,6 +1,7 @@
 {% extends 'base.html' %} 
+{% block title %}- Update Post {% endblock %}
 {% block content %}
-<h1>Add a Post</h1>
+<h1 class="pt-3">Update Post {{post.name}}</h1>
 
 <form method="post">
 <!-- Security Feature  -->
@@ -12,5 +13,3 @@
 </form>
 
 {% endblock %}
-
-

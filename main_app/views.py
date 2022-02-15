@@ -11,6 +11,7 @@ from main_app.forms import UserUpdateForm, ProfileUpdateForm
 from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 # Create your views here.
@@ -42,22 +43,7 @@ class ProfileView(TemplateView):
         
         context['profile'] = user.profile
         context['user_posts'] = posts
-        return context
-      
-class CreatePost(CreateView):
-    model = Post
-    fields = ['title', 'user', 'content', 'content_img', 'location']
-    template_name = 'create_post.html'
-    success_url = '/discover'
-    
-class ViewPost(DetailView):
-    model = Post
-    template_name = 'view_post.html'
-    
-class UpdatePost(UpdateView):
-    model = Post
-template_name = 'post_update.html'   ##create post update page.
-    
+        return context 
     
 class ProfileUpdate(UpdateView):
     
@@ -106,3 +92,21 @@ class Signup(View):
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
         
+class CreatePost(CreateView):
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'create_post.html'
+    success_url = '/discover'
+    
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
+    
+class UpdatePost(UpdateView):
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'post_update.html'
+    success_url = '/discover'##create post update page.
+
+    def get_success_url(self):
+        return reverse('view_post', kwargs={'pk': self.object.pk})     
