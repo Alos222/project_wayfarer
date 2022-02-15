@@ -35,11 +35,27 @@ class Discover(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
+<<<<<<< HEAD
+=======
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        user = User.objects.get(username=context['username'])
+        posts = Post.objects.filter(user=user)
+        
+        context['profile'] = user.profile
+        context['user_posts'] = posts
+        return context
+      
+>>>>>>> e9443f2f81ef233513318c7b95503d65f0ff49fa
 class CreatePost(CreateView):
     model = Post
     fields = ['title', 'user', 'content', 'content_img', 'location']
     template_name = 'create_post.html'
     success_url = '/discover'
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e9443f2f81ef233513318c7b95503d65f0ff49fa
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
@@ -47,6 +63,10 @@ class ViewPost(DetailView):
 class UpdatePost(UpdateView):
     model = Post
 template_name = 'post_update.html'   ##create post update page.
+<<<<<<< HEAD
+=======
+    
+>>>>>>> e9443f2f81ef233513318c7b95503d65f0ff49fa
     
 class ProfileUpdate(UpdateView):
     
