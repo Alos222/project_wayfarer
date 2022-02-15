@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, View, UpdateView
+from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from main_app.models import Post
+from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 
@@ -10,6 +11,7 @@ from main_app.forms import UserUpdateForm, ProfileUpdateForm
 from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 # Create your views here.
@@ -34,7 +36,6 @@ class Discover(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
-    
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         user = User.objects.get(username=context['username'])
@@ -42,7 +43,7 @@ class ProfileView(TemplateView):
         
         context['profile'] = user.profile
         context['user_posts'] = posts
-        return context
+        return context 
     
 class ProfileUpdate(UpdateView):
     
@@ -91,3 +92,21 @@ class Signup(View):
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
         
+class CreatePost(CreateView):
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'create_post.html'
+    success_url = '/discover'
+    
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
+    
+class UpdatePost(UpdateView):
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'post_update.html'
+    success_url = '/discover'##create post update page.
+
+    def get_success_url(self):
+        return reverse('view_post', kwargs={'pk': self.object.pk})     
