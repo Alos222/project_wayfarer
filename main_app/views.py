@@ -24,13 +24,13 @@ class Discover(TemplateView):
     template_name = 'discover.html'
 
     def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      city = self.request.GET.get('city')
-      if city != None:
-        context['locations'] = Location.objects.filter(name__icontains=city)
-      else: 
-        context['locations'] = Location.objects.all()
-      return context
+        context = super().get_context_data(**kwargs)
+        city = self.request.GET.get('city')
+        if city != None:
+            context['locations'] = Location.objects.filter(name__icontains=city)
+        else: 
+            context['locations'] = Location.objects.all()
+        return context
 
 
 class ProfileView(TemplateView):
