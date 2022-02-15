@@ -110,3 +110,5 @@ class UpdatePost(UpdateView):
 
     def get_success_url(self):
         return reverse('view_post', kwargs={'pk': self.object.pk})     
+    
+    
