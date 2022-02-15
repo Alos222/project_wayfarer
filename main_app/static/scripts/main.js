@@ -1,12 +1,11 @@
-$locations = $('.location');
-$locationContent = $('.locationContent')
-console.log($locations)
+// Variables from discover page 
+$list = $('.city_list')
+$discovercard = $('#discovercard')
 
-$locationContent.click(function() {
-    $(this).toggleClass('d-none')
-})
 
-$locations.click(function(){
-    console.log('this is a click!')
-    console.log($(this).children().toggleClass('d-none'))
+// This function handles clicks for the list of locations and populates the div block with location data
+$list.click(function(){
+    let description = $(this).find('#city_description').html()
+    $discovercard.empty()
+    $discovercard.append(description)
 })
