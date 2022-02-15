@@ -3,3 +3,7 @@
     font-weight: bolder;
     color: black;
 }
+
+.navbar-brand {
+    margin-left: 1em;
+}
