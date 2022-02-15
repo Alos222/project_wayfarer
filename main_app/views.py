@@ -1,15 +1,9 @@
 from django.shortcuts import render, redirect
-<<<<<<< HEAD
-from django.views.generic import TemplateView, View, CreateView, DetailView
+from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-
 from main_app.models import Post
-=======
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, View, UpdateView
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
 
 from django.contrib.auth.decorators import login_required
 
@@ -18,7 +12,6 @@ from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
 
->>>>>>> 24b2dfd2bb25ffd384e0f59dcb1f75d422813c67
 
 # Create your views here.
 class Home(TemplateView):
@@ -42,7 +35,6 @@ class Discover(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
-<<<<<<< HEAD
 class CreatePost(CreateView):
     model = Post
     fields = ['title', 'user', 'content', 'content_img', 'location']
@@ -51,14 +43,10 @@ class CreatePost(CreateView):
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
-=======
     
-    def get_context_data(self, **kwargs):
-        context =  super().get_context_data(**kwargs)
-        user = User.objects.get(username=context['username'])
-        context['profile'] = user.profile
-        return context
->>>>>>> 24b2dfd2bb25ffd384e0f59dcb1f75d422813c67
+class UpdatePost(UpdateView):
+    model = Post
+template_name = 'post_update.html'   ##create post update page.
     
 class ProfileUpdate(UpdateView):
     
