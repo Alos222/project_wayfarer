@@ -1,4 +1,11 @@
 from django.shortcuts import render, redirect
+<<<<<<< HEAD
+from django.views.generic import TemplateView, View, CreateView, DetailView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+
+from main_app.models import Post
+=======
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, UpdateView
 from django.contrib.auth.forms import UserCreationForm
@@ -11,6 +18,7 @@ from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
 
+>>>>>>> 24b2dfd2bb25ffd384e0f59dcb1f75d422813c67
 
 # Create your views here.
 class Home(TemplateView):
@@ -34,6 +42,16 @@ class Discover(TemplateView):
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
+<<<<<<< HEAD
+class CreatePost(CreateView):
+    model = Post
+    fields = ['title', 'user', 'content', 'content_img', 'location']
+    template_name = 'create_post.html'
+    success_url = '/discover'
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
+=======
     
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
@@ -43,6 +61,7 @@ class ProfileView(TemplateView):
         context['profile'] = user.profile
         context['user_posts'] = posts
         return context
+>>>>>>> 24b2dfd2bb25ffd384e0f59dcb1f75d422813c67
     
 class ProfileUpdate(UpdateView):
     
@@ -90,4 +109,14 @@ class Signup(View):
         else:
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
+
+
+
+class Postdetail:
+    def __init__(self, title, user, content, content_img, location):
+        self.title = title
+        self.user = user
+        self.content = content
+        self.content_img = content_img
+        self.location = location
         

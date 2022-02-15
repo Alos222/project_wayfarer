@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+<div class="gallery">
+    {% for post in posts%}
+    <div class="card">
+        <img src="{{post.content_img}}"></img>
+        <p class="card-header-title">{{post.title}}</p>
+        <p>{{post.content}}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+<!--   -->
+
+<div class="detail__img">
+    <img src="{{content_img.img}}" alt="{{post.title}}" />
+</div>
+<div class="detail__name">
+    {% if post.verified_artist %}    <!--what should i put instead of verified_artist?-->
+    <div class="icon-text">
+        <span class="icon has-text-info">
+            <i class="fas fa-check-circle"></i>
+        </span>
+        <span>Verified</span>
+    </div>
+    {% endif %}
+    <h1 class="title">{{post.title}}</h1>
+</div>
+<div class="detail__container">
+    <div class="buttons">
+        <div class="detail__container">
+            <div class="buttons">
+                <div class="buttons">
+            <!-- just like how we added the artist detail link we can do the same thing for update -->
+            <a href="{% url 'post_update' post.pk %}" class="button is-info"> Updates
+                <span class="icon">
+                    <i class="fas fa-edit"></i>
+                </span>
+            </a>
+            <a href="{% url 'post_update' post.pk %}" class="button is-danger"> Delete Post!
+                <span class="icon">
+                    <i class="fas fa-edit"></i>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
