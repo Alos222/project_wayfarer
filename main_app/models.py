@@ -27,7 +27,7 @@ class Location (models.Model):
     
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
     content = models.CharField(max_length=2000)
     content_img = ImageField(blank=True, manual_crop="")
     location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="posts")
