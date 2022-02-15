@@ -1,3 +1,42 @@
+.image_city{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    border: .5px solid black;
+    border-radius: 2px;
+    width: 450px;
+}
+#discover_img {
+    border-radius: 5px;
+    width: 200px;
+    margin: 2% 2% ;
+}
+
+#discover_city{
+    margin: 5%;
+}
+
+.city_list{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+#discover_container{
+    display: flex;
+    flex-direction: column;
+}
+
+#discovercard{
+    position: absolute;
+    border: 5px solid black;
+    width: 40%;
+    max-height: 50%;
+    margin-top: -255px;
+    margin-left: 450px;
+    padding-left: 50px;
+}
+  
 .profile-post{
     text-decoration: none;
     font-weight: bolder;

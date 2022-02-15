@@ -1,13 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Discover Page</h1>
-        {% for location in locations %}
-    <div class="list_of_locations">
-        <div class="location">{{location.city}}
-            <p class="locationContent">{{location.country}}</p>
+    {% for location in locations %}
+    <div id="discover_container">
+   
+    <div class="city_list">
+        <div class="image_city">
+        <p class="d-none" id="locationid">{{location.pk}}</p>
+        <p class="cities" id="discover_city">{{location.city}}</p>
+        <p class="d-none" id="city_description">{{location.description}}<p>
+        <img src="{{location.img}}" id="discover_img"/>
         </div>
-     
     </div>
-        {% endfor %}
+    {% endfor %}
+    <div class="discover_desc">
+        <div id="discovercard">
+            <p>just need to see this</p>
+        </div>
+    </div>
+   
+    </div>
+    
 
 {% endblock %}
