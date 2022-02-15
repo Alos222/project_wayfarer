@@ -7,6 +7,14 @@
         <h1>City: {{profile.city}}</h1>
         <h1>Country: {{profile.country}}</h1>
     </div>
+    {% for post in user_posts %}
+        <div>
+            <a class="profile-post" href="">
+                <p>{{post.title}}</p>
+            </a>
+        </div>
+    {% endfor %}
+
     {% if user.is_authenticated and user.username == username %}
         <a href="{% url 'profile_update' username%}">
             <button class="button">Update</button>

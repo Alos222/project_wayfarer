@@ -24,22 +24,32 @@ class Discover(TemplateView):
     template_name = 'discover.html'
 
     def get_context_data(self, **kwargs):
-      context = super().get_context_data(**kwargs)
-      city = self.request.GET.get('city')
-      if city != None:
-        context['locations'] = Location.objects.filter(name__icontains=city)
-      else: 
-        context['locations'] = Location.objects.all()
-      return context
+        context = super().get_context_data(**kwargs)
+        city = self.request.GET.get('city')
+        if city != None:
+            context['locations'] = Location.objects.filter(name__icontains=city)
+        else: 
+            context['locations'] = Location.objects.all()
+        return context
 
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        user = User.objects.get(username=context['username'])
+        posts = Post.objects.filter(user=user)
+        
+        context['profile'] = user.profile
+        context['user_posts'] = posts
+        return context
+      
 class CreatePost(CreateView):
     model = Post
     fields = ['title', 'user', 'content', 'content_img', 'location']
     template_name = 'create_post.html'
     success_url = '/discover'
+    
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
@@ -47,6 +57,7 @@ class ViewPost(DetailView):
 class UpdatePost(UpdateView):
     model = Post
 template_name = 'post_update.html'   ##create post update page.
+    
     
 class ProfileUpdate(UpdateView):
     
