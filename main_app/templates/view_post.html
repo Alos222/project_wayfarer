@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
     <div class="detail__img">
         <img src="{{post.content_img}}" alt="{{post.title}}" />
     </div>
@@ -18,7 +17,7 @@
                         <i class="fas fa-edit"></i>
                     </span>
                 </a>
-                <a href="{% url 'post_update' post.pk %}" class="btn btn-danger">Delete
+                <a href="{% url 'post_delete_confirmation' post.pk %}" class="button is-danger"> Delete Post!
                     <span class="icon">
                         <i class="fas fa-edit"></i>
                     </span>

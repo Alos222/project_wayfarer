@@ -1,8 +1,14 @@
 {% extends 'base.html' %} 
 {% block title %}- Update Post {% endblock %}
 {% block content %}
-<h1 class="pt-3">Update Post {{post.name}}</h1>
-
+<div class="detail__img">
+    <img src="{{post.content_img}}" alt="{{post.title}}" />
+</div>
+<div>
+<h2 class="pt-3">Update Post</h2>
+<h1 class="pt-3"> {{post.title}}</h1>
+</div>
+<div>
 <form method="post">
 <!-- Security Feature  -->
     {% csrf_token %} 
@@ -11,5 +17,7 @@
 <!--  Submit form  -->
     <input type="submit" value="Submit" />
 </form>
-
+</br>
+</br>
+</div>
 {% endblock %}
