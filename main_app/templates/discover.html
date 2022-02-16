@@ -9,9 +9,10 @@
                 {% for location in locations %}
                     <div class="image_city">
                         <p class="d-none" id="locationid">{{location.pk}}</p>
-                        <p class="cities" id="discover_city">{{location.city}}</p>
+                        <h4 class="cities" id="discover_city">{{location.city}}</h4>
+                        <p class="d-none" id="discover_country">{{location.country}}</hp>
                         <p class="d-none" id="city_description">{{location.description}}<p>
-                        <img src="{{location.img}}" id="discover_img"/>
+                        <img src="{{location.img}}" class=".img-fluid "id="discover_img"/>
                     </div>
                 {% endfor %}
             </div>
