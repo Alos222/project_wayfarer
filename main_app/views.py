@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView
+from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from main_app.models import Post
@@ -94,7 +94,7 @@ class Signup(View):
         
 class CreatePost(CreateView):
     model = Post
-    fields = ['title', 'content', 'content_img', 'location']
+    fields = ['title', 'user', 'content', 'content_img', 'location']
     template_name = 'create_post.html'
     success_url = '/discover'
     
@@ -111,4 +111,7 @@ class UpdatePost(UpdateView):
     def get_success_url(self):
         return reverse('view_post', kwargs={'pk': self.object.pk})     
     
-    
+class DeletePost(DeleteView):
+    model = Post
+    template_name = "post_delete_confirmation.html"
+    success_url = "/discover"    

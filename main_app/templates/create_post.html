@@ -1,7 +1,13 @@
 {% extends 'base.html' %} 
 {% block content %}
-<h1>Add a Post</h1>
-
+<div class="">
+    <h3>Hello {{user.username}}!</h3></br>
+    <img src="{{user.img}}" alt="{{user.username}}" />
+</div>
+<div>
+<h2>Would you like to add a new post?</h2>
+</div>
+<div>
 <form method="post">
 <!-- Security Feature  -->
     {% csrf_token %} 
@@ -10,7 +16,7 @@
 <!--  Submit form  -->
     <input type="submit" value="Submit" />
 </form>
-
+</div>
 {% endblock %}
 
 
