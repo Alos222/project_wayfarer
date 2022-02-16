@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Discover Page</h1>
-    {% for location in locations %}
+<div class="row">
+    <h1 class="d-none">Discover Page</h1>
+</div>
     <div id="discover_container">
-   
-    <div class="city_list">
-        <div class="image_city">
-        <p class="d-none" id="locationid">{{location.pk}}</p>
-        <p class="cities" id="discover_city">{{location.city}}</p>
-        <p class="d-none" id="city_description">{{location.description}}<p>
-        <img src="{{location.img}}" id="discover_img"/>
+        <div class="row">
+            <div class="city_list overflow-auto col-sm-4">
+                {% for location in locations %}
+                    <div class="image_city">
+                        <p class="d-none" id="locationid">{{location.pk}}</p>
+                        <p class="cities" id="discover_city">{{location.city}}</p>
+                        <p class="d-none" id="city_description">{{location.description}}<p>
+                        <img src="{{location.img}}" id="discover_img"/>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="discover_desc col">
+                <div id="discovercard">
+                   
+                </div>
+            </div>
         </div>
     </div>
-    {% endfor %}
-    <div class="discover_desc">
-        <div id="discovercard">
-            <p>just need to see this</p>
-        </div>
-    </div>
-   
-    </div>
-    
-
 {% endblock %}
