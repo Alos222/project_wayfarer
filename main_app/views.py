@@ -29,8 +29,10 @@ class Discover(TemplateView):
         city = self.request.GET.get('city')
         if city != None:
             context['locations'] = Location.objects.filter(name__icontains=city)
+            context['post'] = Post.objects.filter(name__icontains=city)
         else: 
             context['locations'] = Location.objects.all()
+            context['posts'] = Post.objects.all()
         return context
 
 
