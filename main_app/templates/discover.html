@@ -9,17 +9,17 @@
                 {% for location in locations %}
                     <div class="image_city">
                         <h2 class="d-none" id="locationid">{{location.pk}}</h2>
-                        <h4 class="cities" id="discover_city">{{location.city}}</h4>
-                        <p class="d-none" id="discover_country">{{location.country}}</hp>
+                        <h3 class="cities" id="discover_city">{{location.city}}</h3>
+                        <p class="d-none" id="discover_country">{{location.country}}</p>
                         <p class="d-none" id="city_description">{{location.description}}<p>
                         <img src="{{location.img}}" class=".img-fluid "id="discover_img"/>
                         {% for post in posts %}
                         {% if post.location.pk == location.pk %}
-                            <div class="" id="location_posts">
-                            <img src="{{post.content_img}}" class=".img-fluid" id="post_img"/>
-                            <h5>{{post.title}}</h5>
-                            <p>{{post.content}}</p>
-                            <p>posted by {{post.user}}</p>
+                            <div class="row location_post d-none">
+                            <img src="{{post.content_img}}" class="post_img .img-fluid col-sm-4" id="post_img"/>
+                            <h5 class="post_title col-sm-8">{{post.title}}</h5>
+                            <p class="col-sm-8 discovercardcontent">{{post.content}}</p>
+                            <p class="postsignature">posted by <span class="userid">{{post.user}}<span></p>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -30,7 +30,17 @@
                 <div id="discovercard">
                    
                 </div>
-               
+                <div class="row d-none"  id="postbtn">
+                    <div class="col postline">
+                        <h4>Posts</h4>
+                    </div>
+                    <div class="col-sm-1">
+                    <a class="btn btn-primary" href="{% url 'create_post' %}" role="button">+</a>
+                    </div>
+                <div>
+                <div class="dicover_postlist overflow-auto col-sm-12 d-none" id="discover_post_container">
+
+                </div>
             </div>
         </div>
     </div>
