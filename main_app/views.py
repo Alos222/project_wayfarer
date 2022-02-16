@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 
-from main_app.forms import UserUpdateForm, ProfileUpdateForm
+from main_app.forms import ProfileUpdateForm
 from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
@@ -49,10 +49,8 @@ class ProfileUpdate(UpdateView):
     
     def get(self, request, **kwargs):
         if request.user.is_authenticated and request.user.username == kwargs['username']:
-            user_form = UserUpdateForm()
             profile_form = ProfileUpdateForm()
             context = {
-                'user_form' : user_form,
                 'profile_form' : profile_form
             }
             return render(request, 'profile_update.html', context)
@@ -64,11 +62,9 @@ class ProfileUpdate(UpdateView):
             if request.user.username != kwargs['username']:
                 return redirect('profile', kwargs['username'])
             
-            user_form = UserUpdateForm(request.POST, instance=request.user)
             profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
         
-            if user_form.is_valid() and profile_form.is_valid():
-                user_form.save()
+            if profile_form.is_valid():
                 profile_form.save()
                 return redirect('profile', kwargs['username'])
             
@@ -114,4 +110,11 @@ class UpdatePost(UpdateView):
 class DeletePost(DeleteView):
     model = Post
     template_name = "post_delete_confirmation.html"
-    success_url = "/discover"    
+    success_url = "/discover"   
+    
+class LoginView(View):
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("/user/{}".format(request.user.username))
+        else:
+            return redirect('/accounts/login/')
