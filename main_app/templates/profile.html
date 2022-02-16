@@ -4,12 +4,13 @@
         <h1>{{username}}'s Profile Page</h1>
     </div>
     <div>
-        <h1>City: {{profile.city}}</h1>
-        <h1>Country: {{profile.country}}</h1>
+        <h3>City: {{profile.city}}</h3>
+        <h3>Country: {{profile.country}}</h3>
+        <h3>Joined: {{user.date_joined}}</h3>
     </div>
     {% for post in user_posts %}
         <div>
-            <a class="profile-post" href="">
+            <a class="profile-post" href="/view_post/{{post.pk}}/">
                 <p>{{post.title}}</p>
             </a>
         </div>
@@ -17,7 +18,7 @@
 
     {% if user.is_authenticated and user.username == username %}
         <a href="{% url 'profile_update' username%}">
-            <button class="button">Update</button>
+            <button class="btn btn-primary">Update Profile</button>
         </a>
     {% endif %}
 {% endblock %}

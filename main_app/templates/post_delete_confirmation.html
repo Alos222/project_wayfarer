@@ -1,0 +1,23 @@
+{% extends 'base.html' %} 
+{% block title %}- Delete {% endblock %}
+{% block content %}
+<div class="detail__img">
+    <img src="{{post.content_img}}" alt="{{post.title}}" />
+</div>
+<h2 class="title pt-5">Are you sure you want to delete your post?</h2>
+<h1 class="title pt-5">"{{post.title}}"</h1>
+</br>
+<div>
+    <form method="post">
+    {% csrf_token %}
+    <div class="buttons">
+    <!-- confirm artist delete -->
+        <input class="button is-danger" type="submit" value="Confirm" />
+        <!-- Redirect back to detail on cancel -->
+        <a class="button is-primary" href="{% url 'view_post' post.pk %}">Cancel</a>
+    </div>
+</form>
+</br>
+</br>
+</div>
+{% endblock %}
