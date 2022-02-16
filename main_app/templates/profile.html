@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div>
+    <div class="container">
         <h1>{{username}}'s Profile Page</h1>
     </div>
-    <div>
+    <div class="container">
         <h3>City: {{profile.city}}</h3>
         <h3>Country: {{profile.country}}</h3>
-        <h3>Joined: {{user.date_joined}}</h3>
+        <h3>Joined: {{user.profile.date}}</h3>
     </div>
+
+    {% if user.is_authenticated and user.username == username %}
+        <a href="{% url 'profile_update' username%}">
+            <button class="btn btn-primary">Update Profile</button>
+        </a>
+    {% endif %}
+
     {% for post in user_posts %}
         <div>
             <a class="profile-post" href="/view_post/{{post.pk}}/">
@@ -16,9 +23,5 @@
         </div>
     {% endfor %}
 
-    {% if user.is_authenticated and user.username == username %}
-        <a href="{% url 'profile_update' username%}">
-            <button class="btn btn-primary">Update Profile</button>
-        </a>
-    {% endif %}
+    
 {% endblock %}

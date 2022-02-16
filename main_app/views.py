@@ -114,4 +114,11 @@ class UpdatePost(UpdateView):
 class DeletePost(DeleteView):
     model = Post
     template_name = "post_delete_confirmation.html"
-    success_url = "/discover"    
+    success_url = "/discover"   
+    
+class LoginView(View):
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated:
+            return redirect("/user/{}".format(request.user.username))
+        else:
+            return redirect('/accounts/login/')
