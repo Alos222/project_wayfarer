@@ -1,27 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-        <h1>{{username}}'s Profile Page</h1>
-    </div>
-    <div class="container">
-        <h3>City: {{profile.city}}</h3>
-        <h3>Country: {{profile.country}}</h3>
-        <h3>Joined: {{user.profile.date}}</h3>
-    </div>
 
-    {% if user.is_authenticated and user.username == username %}
-        <a href="{% url 'profile_update' username%}">
-            <button class="btn btn-primary">Update Profile</button>
-        </a>
-    {% endif %}
+    <div class="container mt-4">
 
-    {% for post in user_posts %}
-        <div>
-            <a class="profile-post" href="/view_post/{{post.pk}}/">
-                <p>{{post.title}}</p>
-            </a>
+        <div class="row">
+            <div class="col">
+                <img class="img-fluid" src={{user.profile.img}}>
+            </div>
+            <div class="col-9 d-flex justify-content-center align-items-start flex-column">
+                <h4>Name: {{user.username}}</h3>
+                <h4>City: {{profile.city}}</h3>
+                <h4>Country: {{profile.country}}</h3>
+                <h4>Joined: {{user.profile.date}}</h3>
+                {% if user.is_authenticated and user.username == username %}
+                    <a href="{% url 'profile_update' username%}">
+                        <button class="btn btn-primary">Update Profile</button>
+                    </a>
+                {% endif %}
+            </div>
         </div>
-    {% endfor %}
 
-    
+        <div class="row d-grid gap-3 mt-4 profile-list">
+            {% for post in user_posts %}
+            <div class="p-2 border">
+                <a class="profile-post" href="/view_post/{{post.pk}}/">
+                    <p>{{post.title}}</p>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+
 {% endblock %}
