@@ -8,7 +8,7 @@
             <div class="city_list overflow-auto col-sm-4">
                 {% for location in locations %}
                     <div class="image_city">
-                        <p class="d-none" id="locationid">{{location.pk}}</p>
+                        <h2 class="d-none" id="locationid">{{location.pk}}</h2>
                         <h4 class="cities" id="discover_city">{{location.city}}</h4>
                         <p class="d-none" id="discover_country">{{location.country}}</hp>
                         <p class="d-none" id="city_description">{{location.description}}<p>
@@ -16,6 +16,7 @@
                     </div>
                 {% endfor %}
             </div>
+            {{locations}}
             <div class="discover_desc col">
                 <div id="discovercard">
                    

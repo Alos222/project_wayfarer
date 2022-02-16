@@ -7,6 +7,9 @@ $contentimg = $('#contentimg')
 
 // This function handles clicks for the list of locations and populates the div block with location data
 $list.click(function(){
+    //grabbing city primary key
+    let primarykey = $(this).find('#locationid').clone()
+    $(primarykey).attr('id', 'discovercard_pk')
     // grabs image from list and then assigns new id
     let img = $(this).find('#discover_img').clone()
     $(img).attr('id', 'discovercard_img')
@@ -21,10 +24,10 @@ $list.click(function(){
     $(country).attr('id', 'discovercard_country')
     // populate discover card
     $discovercard.empty()
+    $discovercard.append(primarykey)
     $discovercard.append(img[0])
     $discovercard.append(city[0])
     $discovercard.append(country[0])
     $discovercard.append(description[0])
-    // $discovercard.children('h5').toggleClass('d-none')
     $discovercard.children('p').toggleClass('d-none')
 });
