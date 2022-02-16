@@ -13,6 +13,16 @@
                         <p class="d-none" id="discover_country">{{location.country}}</hp>
                         <p class="d-none" id="city_description">{{location.description}}<p>
                         <img src="{{location.img}}" class=".img-fluid "id="discover_img"/>
+                        {% for post in posts %}
+                        {% if post.location.pk == location.pk %}
+                            <div class="" id="location_posts">
+                            <img src="{{post.content_img}}" class=".img-fluid" id="post_img"/>
+                            <h5>{{post.title}}</h5>
+                            <p>{{post.content}}</p>
+                            <p>posted by {{post.user}}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                     </div>
                 {% endfor %}
             </div>
@@ -20,6 +30,7 @@
                 <div id="discovercard">
                    
                 </div>
+               
             </div>
         </div>
     </div>
