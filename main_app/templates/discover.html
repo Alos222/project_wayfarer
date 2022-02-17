@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
+
+{% block formscript %} 
+    {{post_form.media}}
+{% endblock %}
+
 {% block content %}
 <div class="row">
     <h1 class="d-none">Discover Page</h1>
 </div>
     <div id="discover_container">
         <div class="row">
+            <h2>Cities</h2>
             <div class="city_list overflow-auto col-sm-4">
                 {% for location in locations %}
                     <div class="image_city">
@@ -28,14 +34,36 @@
             </div>
             <div class="discover_desc col">
                 <div id="discovercard">
-                   
+                    
                 </div>
                 <div class="row d-none"  id="postbtn">
                     <div class="col postline">
                         <h4>Posts</h4>
                     </div>
                     <div class="col-sm-1">
-                    <a class="btn btn-primary" href="{% url 'create_post' %}" role="button">+</a>
+                        <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#createPostModal">+</a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="createPostModalLabel">Sign In</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class='col'>
+                                                <form method="post" action="{% url 'create_post' %}">
+                                                    {% csrf_token %} {{post_form.as_p}}
+                                                    <input type="submit" class="btn btn-primary" value="Post" />
+                                                    <input type="hidden" name="next" value="{{ next }}" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 <div>
                 <div class="dicover_postlist overflow-auto col-sm-12 d-none" id="discover_post_container">
