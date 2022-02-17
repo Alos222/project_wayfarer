@@ -5,16 +5,13 @@
 {% block content %}
 <div class="">
     <h3>Hello {{user.username}}!</h3></br>
-<<<<<<< HEAD
-    <img src="{{user.profile.img}}" alt="{{user.username}}" />
-=======
+    
     {% if user.profile.img %}
         <img src="{{user.profile.img}}" alt="{{user.username}}" />
     {% else %}
         <img src="{% static 'assets/default_photo.png' %}" alt="Default Profile Photo" />
     {% endif %}
->>>>>>> f183cd8fc4bd19dbedfc7102536a574f24927924
-</div>
+
 <div>
 <h2>Would you like to add a new post?</h2>
 </div>
