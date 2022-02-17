@@ -17,10 +17,8 @@ from django.urls import reverse
 # Create your views here.
 class Home(TemplateView):
     template_name = 'home.html'
-    
-class About(TemplateView):
-    template_name = 'about.html'
-    
+
+
 class Discover(TemplateView):
     template_name = 'discover.html'
 
