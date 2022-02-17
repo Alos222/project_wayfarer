@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 
-from main_app.forms import ProfileUpdateForm
+from main_app.forms import ProfileUpdateForm, CreatePostForm
 from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
@@ -20,9 +20,6 @@ class Home(TemplateView):
         context = createAuthForms()
         return render(request, 'home.html', context)
         
-class About(TemplateView):
-    template_name = 'about.html'
-    
 class Discover(TemplateView):
     template_name = 'discover.html'
 
@@ -37,6 +34,7 @@ class Discover(TemplateView):
             context['posts'] = Post.objects.all()
             
         context.update(createAuthForms())
+        context['post_form'] = CreatePostForm()
         return context
 
 class ProfileView(TemplateView):
@@ -93,15 +91,15 @@ class Signup(View):
             return render(request, 'home.html', context)
         
 class CreatePost(CreateView):
-    model = Post
-    fields = ['title', 'user', 'content', 'content_img', 'location']
-    template_name = 'create_post.html'
-    success_url = '/discover'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(createAuthForms())
-        return context
+    def post(self, request):
+        post_form = CreatePostForm(request.POST)
+        print(request.POST['user'])
+        if post_form.is_valid():
+            Post.objects.create(**post_form.cleaned_data)
+            print(request.user.pk)
+            # post.user = request.user.pk
+            # post.save()
+        return redirect('/discover')
     
 class ViewPost(DetailView):
     model = Post
