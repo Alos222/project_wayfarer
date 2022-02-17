@@ -16,13 +16,12 @@ from django.urls import reverse
 
 # Create your views here.
 class Home(TemplateView):
+    template_name = 'home.html'
+    
     def get(self, request, **kwargs):
         context = createAuthForms()
         return render(request, 'home.html', context)
-        
-class About(TemplateView):
-    template_name = 'about.html'
-    
+
 class Discover(TemplateView):
     template_name = 'discover.html'
 
