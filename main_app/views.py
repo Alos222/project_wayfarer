@@ -1,11 +1,11 @@
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from main_app.forms import UpdatePostForm
-
 from django.contrib.auth import login
 from main_app.models import Post
 from django.urls import reverse_lazy
+from .forms import UpdatePostForm, UserCreateForm
 
 from django.contrib.auth.decorators import login_required
 
@@ -15,18 +15,17 @@ from .models import Profile, Location, Post
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+User._meta.get_field('username')._unique = True
+User._meta.get_field('email')._unique = True
 
 # Create your views here.
 class Home(TemplateView):
-    template_name = 'home.html'
-    
     def get(self, request, **kwargs):
         context = createAuthForms()
         return render(request, 'home.html', context)
 
 class About(TemplateView):
     template_name = 'about.html'
-
 
 class Discover(TemplateView):
     template_name = 'discover.html'
@@ -95,21 +94,26 @@ class Signup(View):
             return redirect("/user/{}".format(user.username))
         
         else:
-            context = {"signup_form": form}
+            context = {}
+            context.update(createAuthForms())
             return render(request, 'home.html', context)
         
 class CreatePost(CreateView):
     def post(self, request):
         post_form = CreatePostForm(request.POST)
-        print(request.POST['user'])
         if post_form.is_valid():
             Post.objects.create(**post_form.cleaned_data)
-            print(request.user.pk)
-            # post.user = request.user.pk
-            # post.save()
         return redirect('/discover')
 
-
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        return context
+    
 class UpdatePost(UpdateView):
     model = Post
     fields = ['title', 'content', 'content_img', 'location']
@@ -123,11 +127,7 @@ class UpdatePost(UpdateView):
         return context
 
     def get_success_url(self):
-        return reverse('view_post', kwargs={'pk': self.object.pk})
-
-class ViewPost(DetailView):
-    model = Post
-    template_name = 'view_post.html'
+        return reverse('view_post', kwargs={'pk': self.object.pk})     
     
 class DeletePost(DeleteView):
     model = Post
@@ -147,7 +147,7 @@ class LoginView(View):
             return redirect('/accounts/login/')
         
 def createAuthForms():
-    signup_form = UserCreationForm()
+    signup_form = UserCreateForm()
     login_form = AuthenticationForm()
     context = {
         'signup_form' : signup_form,
