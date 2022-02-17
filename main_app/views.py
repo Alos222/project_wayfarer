@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
 from main_app.models import Post
 from django.urls import reverse_lazy
-from .forms import UserCreateForm
+from .forms import UpdatePostForm, UserCreateForm
 
 from django.contrib.auth.decorators import login_required
 
@@ -120,6 +120,7 @@ class UpdatePost(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update(createAuthForms())
+        context['post_form'] = UpdatePostForm()
         return context
 
     def get_success_url(self):
