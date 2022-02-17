@@ -5,15 +5,15 @@
 
         <div class="row">
             <div class="col">
-                <img class="img-fluid" src={{user.profile.img}}>
+                <img class="img-fluid" src={{profile_user.profile.img}}>
             </div>
             <div class="col-9 d-flex justify-content-center align-items-start flex-column">
-                <h4>Name: {{user.username}}</h3>
-                <h4>City: {{profile.city}}</h3>
-                <h4>Country: {{profile.country}}</h3>
-                <h4>Joined: {{user.profile.date}}</h3>
-                {% if user.is_authenticated and user.username == username %}
-                    <a href="{% url 'profile_update' username%}">
+                <h4>Name: {{profile_user.username}}</h3>
+                <h4>City: {{profile_user.profile.city}}</h3>
+                <h4>Country: {{profile_user.profile.country}}</h3>
+                <h4>Joined: {{profile_user.profile.date}}</h3>
+                {% if user.is_authenticated and user.username == profile_user.username %}
+                    <a href="{% url 'profile_update' user.username%}">
                         <button class="btn btn-primary">Update Profile</button>
                     </a>
                 {% endif %}
