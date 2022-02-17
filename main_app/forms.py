@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
+from .models import Post
 from pyuploadcare.dj.forms import ImageField
 
 class ProfileUpdateForm(forms.ModelForm):

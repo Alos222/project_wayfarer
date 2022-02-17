@@ -104,7 +104,7 @@ class UpdatePost(UpdateView):
     
 	def get(self, request, **kwargs):
 		print(request.user.id)
-		if request.user.is_authenticated:
+		if request.user.is_authenticated and request.user.username == kwargs['username']:
 			post_form = UpdatePostForm()
 			context = {
 				'post_form' : post_form
@@ -116,10 +116,10 @@ class UpdatePost(UpdateView):
 
 	def post(self, request, **kwargs):    
 		if request.user.is_authenticated:
-			if request.user.username != kwargs['username']:   #<--username error ###########
+			if request.user.username != kwargs['username']:  
 				return redirect('profile', kwargs['username'])
 
-			post_form = UpdatePostForm(request.POST, instance=request.user)
+			post_form = UpdatePostForm(request.POST, request.FILES, instance=request.user.profile)
 
 			if post_form.is_valid():
 				post_form.save()
