@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev2
     <div class="detail__img">
         <img src="{{post.content_img}}" alt="{{post.title}}" />
     </div>
@@ -11,24 +14,20 @@
 
     <div class="detail__container">
 
-        <div class="buttons">
-            <div class="detail__container">
-                <div class="buttons">
-                    <div class="buttons">
-                        <a href="{% url 'post_update' post.pk %}" class="button is-info"> Updates
-                            <span class="icon">
-                                <i class="fas fa-edit"></i>
-                            </span>
-                        </a>
-                        <a href="{% url 'post_update' post.pk %}" class="button is-danger"> Delete Post!
-                            <span class="icon">
-                                <i class="fas fa-edit"></i>
-                            </span>
-                        </a>
-                    </div>
-                </div>
+        {% if user.is_authenticated and user == post.user%}
+            <div class="buttons">
+                <a href="{% url 'post_update' post.pk %}" class="btn btn-primary">Update
+                    <span class="icon">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                </a>
+                <a href="{% url 'post_delete_confirmation' post.pk %}" class="button is-danger"> Delete Post!
+                    <span class="icon">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                </a>
             </div>
-        </div>
+        {% endif %}
 
         <div class="content">
             {{post.content}}

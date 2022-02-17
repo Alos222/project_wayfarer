@@ -14,4 +14,5 @@ urlpatterns = [
     path('view_post/delete/<int:pk>/', views.DeletePost.as_view(), name="post_delete_confirmation"),
     path('create_post/', views.CreatePost.as_view(), name='create_post'),
     path('user/<str:username>/update/', views.ProfileUpdate.as_view(), name='profile_update'),
+    path('user/', views.LoginView.as_view(), name='login_redirect'),
 ]
