@@ -24,6 +24,10 @@ class Home(TemplateView):
         context = createAuthForms()
         return render(request, 'home.html', context)
 
+class About(TemplateView):
+    template_name = 'about.html'
+
+
 class Discover(TemplateView):
     template_name = 'discover.html'
 
