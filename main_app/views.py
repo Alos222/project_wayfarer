@@ -39,7 +39,7 @@ class Discover(TemplateView):
             context['post'] = Post.objects.filter(name__icontains=city)
         else: 
             context['locations'] = Location.objects.all()
-            context['posts'] = Post.objects.all()
+            context['posts'] = Post.objects.all().order_by('-date')
             
         context.update(createAuthForms())
         context['post_form'] = CreatePostForm()
