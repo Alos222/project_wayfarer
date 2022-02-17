@@ -99,7 +99,9 @@ class CreatePost(CreateView):
     def post(self, request):
         post_form = CreatePostForm(request.POST)
         if post_form.is_valid():
-            Post.objects.create(**post_form.cleaned_data)
+            data = post_form.cleaned_data
+            data['user_id'] = request.user.pk
+            Post.objects.create(**data)
         return redirect('/discover')
     
 class ViewPost(DetailView):
