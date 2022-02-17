@@ -25,16 +25,21 @@
             </div>
         </div>
 
-        <div class="row d-grid gap-3 mt-4 profile-list">
-            {% for post in user_posts %}
-            <div class="p-2 border">
-                <a class="profile-post" href="/view_post/{{post.pk}}/">
-                    <p>{{post.title}}</p>
-                </a>
+        
+            <div class="row d-grid gap-3 mt-4 profile-list border">
+                {% if user_posts %}
+                    {% for post in user_posts %}
+                        <div class="p-2 border">
+                            <a class="profile-post" href="/view_post/{{post.pk}}/">
+                                <p>{{post.title}}</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                        <div class="d-flex align-items-center flex-column">
+                            <p>No recent post history</p>
+                        </div>
+                {% endif %}
             </div>
-            {% endfor %}
-        </div>
-
     </div>
-
 {% endblock %}
