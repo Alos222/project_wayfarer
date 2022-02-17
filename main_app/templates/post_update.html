@@ -1,5 +1,10 @@
 {% extends 'base.html' %} 
 {% block title %}- Update Post {% endblock %}
+
+{% block formscript %}
+    {{post_form.media}}
+{% endblock %}
+
 {% block content %}
 <div class="detail__img">
     <img src="{{post.content_img}}" alt="{{post.title}}" />
