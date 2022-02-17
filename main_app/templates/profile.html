@@ -1,35 +1,45 @@
 {% extends 'base.html' %}
 {% block content %}
 
+{% load static %}
     <div class="container mt-4">
 
         <div class="row">
             <div class="col">
-                <img class="img-fluid" src={{user.profile.img}}>
+                {% if other_user.profile.img %}
+                    <img class="img-fluid" src={{other_user.profile.img}}>
+                {% else %}
+                    <img class="img-fluid" src={% static 'assets/default_photo.png'%}>
+                {% endif %}
             </div>
             <div class="col-9 d-flex justify-content-center align-items-start flex-column">
-                <h4>Name: {{user.username}}</h3>
-                <h4>City: {{profile.city}}</h3>
-                <h4>Country: {{profile.country}}</h3>
-                <h4>Joined: {{user.profile.date}}</h3>
-                {% if user.is_authenticated and user.username == username %}
-                    <a href="{% url 'profile_update' username%}">
+                <h4>Name: {{other_user.username}}</h3>
+                <h4>City: {{other_user.profile.city}}</h3>
+                <h4>Country: {{other_user.profile.country}}</h3>
+                <h4>Joined: {{other_user.profile.date}}</h3>
+                {% if user.is_authenticated and user.username == other_user.username %}
+                    <a href="{% url 'profile_update' user.username%}">
                         <button class="btn btn-primary">Update Profile</button>
                     </a>
                 {% endif %}
             </div>
         </div>
 
-        <div class="row d-grid gap-3 mt-4 profile-list">
-            {% for post in user_posts %}
-            <div class="p-2 border">
-                <a class="profile-post" href="/view_post/{{post.pk}}/">
-                    <p>{{post.title}}</p>
-                </a>
+        
+            <div class="row d-grid gap-3 mt-4 profile-list border">
+                {% if user_posts %}
+                    {% for post in user_posts %}
+                        <div class="p-2 border">
+                            <a class="profile-post" href="/view_post/{{post.pk}}/">
+                                <p>{{post.title}}</p>
+                            </a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                        <div class="d-flex align-items-center flex-column">
+                            <p>No recent post history</p>
+                        </div>
+                {% endif %}
             </div>
-            {% endfor %}
-        </div>
-
     </div>
-
 {% endblock %}

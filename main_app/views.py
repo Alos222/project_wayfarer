@@ -38,10 +38,10 @@ class ProfileView(TemplateView):
     template_name = 'profile.html'
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
-        user = User.objects.get(username=context['username'])
+        user = User.objects.get(username=kwargs['username'])
         posts = Post.objects.filter(user=user)
         
-        context['profile'] = user.profile
+        context['other_user'] = user
         context['user_posts'] = posts
         return context 
     
