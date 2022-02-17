@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView, DeleteView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login
 from main_app.models import Post
 from django.urls import reverse_lazy
@@ -17,7 +17,10 @@ from django.urls import reverse
 # Create your views here.
 class Home(TemplateView):
     template_name = 'home.html'
-
+    
+    def get(self, request, **kwargs):
+        context = createAuthForms()
+        return render(request, 'home.html', context)
 
 class Discover(TemplateView):
     template_name = 'discover.html'
@@ -31,11 +34,13 @@ class Discover(TemplateView):
         else: 
             context['locations'] = Location.objects.all()
             context['posts'] = Post.objects.all()
+            
+        context.update(createAuthForms())
         return context
-
 
 class ProfileView(TemplateView):
     template_name = 'profile.html'
+    
     def get_context_data(self, **kwargs):
         context =  super().get_context_data(**kwargs)
         user = User.objects.get(username=kwargs['username'])
@@ -43,6 +48,8 @@ class ProfileView(TemplateView):
         
         context['other_user'] = user
         context['user_posts'] = posts
+        
+        context.update(createAuthForms())
         return context 
     
 class ProfileUpdate(UpdateView):
@@ -53,6 +60,7 @@ class ProfileUpdate(UpdateView):
             context = {
                 'profile_form' : profile_form
             }
+            context.update(createAuthForms())
             return render(request, 'profile_update.html', context)
         else:
             return redirect('/')
@@ -71,12 +79,7 @@ class ProfileUpdate(UpdateView):
         else:
             return redirect('/accounts/login')
         
-class Signup(View):
-    def get(self, request):
-        signup_form = UserCreationForm()
-        context = {"form" : signup_form}
-        return render(request, "registration/signup.html", context)
-        
+class Signup(View):        
     def post(self, request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -86,7 +89,7 @@ class Signup(View):
         
         else:
             context = {"signup_form": form}
-            return render(request, 'registration/signup.html', context)
+            return render(request, 'home.html', context)
         
 class CreatePost(CreateView):
     model = Post
@@ -94,9 +97,19 @@ class CreatePost(CreateView):
     template_name = 'create_post.html'
     success_url = '/discover'
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        return context
+    
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        return context
     
 class UpdatePost(UpdateView):
     model = Post
@@ -104,13 +117,23 @@ class UpdatePost(UpdateView):
     template_name = 'post_update.html'
     success_url = '/discover'##create post update page.
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        return context
+
     def get_success_url(self):
         return reverse('view_post', kwargs={'pk': self.object.pk})     
     
 class DeletePost(DeleteView):
     model = Post
     template_name = "post_delete_confirmation.html"
-    success_url = "/discover"   
+    success_url = "/discover"  
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        return context 
     
 class LoginView(View):
     def get(self, request, **kwargs):
@@ -118,3 +141,12 @@ class LoginView(View):
             return redirect("/user/{}".format(request.user.username))
         else:
             return redirect('/accounts/login/')
+        
+def createAuthForms():
+    signup_form = UserCreationForm()
+    login_form = AuthenticationForm()
+    context = {
+        'signup_form' : signup_form,
+        'login_form' : login_form
+    }
+    return context

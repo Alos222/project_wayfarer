@@ -29,12 +29,40 @@
                     <li class="nav-item">
                         <a class="nav-link navbaritem" href="/discover/">Discover</a>
                     </li>
-                    {% if user.is_authenticated == False %}
+                    {% if not user.is_authenticated%}
                         <li class="nav-item">
-                            <a class="nav-link navbaritem" href="/accounts/login/">Log In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link navbaritem" href="/accounts/signup/">Sign Up</a>
+                            <a role="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#signUpModal">
+                                Log In
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="signUpModalLabel">Sign In</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <form method="post" action="{% url 'login' %}">
+                                                        {% csrf_token %} {{login_form.as_p}}
+                                                        <input type="submit" class="btn btn-primary" value="Login" />
+                                                        <input type="hidden" name="next" value="{{ next }}" />
+                                                    </form>
+                                                </div>
+                                                <div class='col'>
+                                                    <form method="post" action="{% url 'signup' %}">
+                                                        {% csrf_token %} {{signup_form.as_p}}
+                                                        <input type="submit" class="btn btn-primary" value="Register" />
+                                                        <input type="hidden" name="next" value="{{ next }}" />
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
                     {% else %}
                         <li class="nav-item">
