@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required
 
-from main_app.forms import ProfileUpdateForm
+from main_app.forms import ProfileUpdateForm, CreatePostForm
 from .models import Profile, Location, Post
 
 from django.contrib.auth.models import User
@@ -18,13 +18,12 @@ from django.urls import reverse
 
 # Create your views here.
 class Home(TemplateView):
+    template_name = 'home.html'
+    
     def get(self, request, **kwargs):
         context = createAuthForms()
         return render(request, 'home.html', context)
-        
-class About(TemplateView):
-    template_name = 'about.html'
-    
+
 class Discover(TemplateView):
     template_name = 'discover.html'
 
@@ -39,6 +38,7 @@ class Discover(TemplateView):
             context['posts'] = Post.objects.all()
             
         context.update(createAuthForms())
+        context['post_form'] = CreatePostForm()
         return context
 
 class ProfileView(TemplateView):
@@ -95,13 +95,18 @@ class Signup(View):
             return render(request, 'home.html', context)
         
 class CreatePost(CreateView):
-    model = Post
-    fields = ['location', 'title', 'content', 'content_img', 'user']
-    template_name = 'create_post.html'
-    success_url = '/discover'
-    
+    def post(self, request):
+        post_form = CreatePostForm(request.POST)
+        print(request.POST['user'])
+        if post_form.is_valid():
+            Post.objects.create(**post_form.cleaned_data)
+            print(request.user.pk)
+            # post.user = request.user.pk
+            # post.save()
+        return redirect('/discover')
+
+   
 class UpdatePost(UpdateView):
-    
 	def get(self, request, **kwargs):
 		print(request.user.id)
 		if request.user.is_authenticated:
@@ -113,14 +118,13 @@ class UpdatePost(UpdateView):
 		else:
 			return redirect('/')
 
-
 	def post(self, request, **kwargs):    
 		if request.user.is_authenticated:
 			if request.user.username != kwargs['username']:   #<--username error ###########
 				return redirect('profile', kwargs['username'])
 
 			post_form = UpdatePostForm(request.POST, instance=request.user)
-
+      
 			if post_form.is_valid():
 				post_form.save()
 				return redirect('/discover', kwargs['username'])
