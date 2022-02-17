@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View, CreateView, DetailView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
+from main_app.forms import UpdatePostForm
 from django.contrib.auth import login
 from main_app.models import Post
 from django.urls import reverse_lazy
@@ -91,25 +92,45 @@ class Signup(View):
         else:
             context = {"signup_form": form}
             return render(request, 'registration/signup.html', context)
-        
 class CreatePost(CreateView):
     model = Post
-    fields = ['title', 'user', 'content', 'content_img', 'location']
+    fields = ['location', 'title', 'content', 'content_img', 'user']
     template_name = 'create_post.html'
     success_url = '/discover'
     
+class UpdatePost(UpdateView):
+
+	def get(self, request, **kwargs):
+		if request.user.is_authenticated and request.user.username == kwargs['username']:
+			post_form = UpdatePostForm()
+			context = {
+				'post_form' : post_form
+			}
+			return render(request, 'post_update.html', context)
+		else:
+			return redirect('/')
+
+
+	def post(self, request, **kwargs):    
+		if request.user.is_authenticated:
+			if request.user.username != kwargs['username']:
+				return redirect('profile', kwargs['username'])
+
+			post_form = UpdatePostForm(request.POST, instance=request.user)
+
+			if post_form.is_valid():
+				post_form.save()
+				return redirect('/discover', kwargs['username'])
+		else:
+			return redirect('/accounts/login')
+
+	def get_success_url(self):
+		return reverse('view_post', kwargs={'pk': self.object.pk})     
+
+
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
-    
-class UpdatePost(UpdateView):
-    model = Post
-    fields = ['title', 'content', 'content_img', 'location']
-    template_name = 'post_update.html'
-    success_url = '/discover'##create post update page.
-
-    def get_success_url(self):
-        return reverse('view_post', kwargs={'pk': self.object.pk})     
     
 class DeletePost(DeleteView):
     model = Post
