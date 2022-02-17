@@ -5,6 +5,7 @@
 {% block content %}
 <div class="">
     <h3>Hello {{user.username}}!</h3></br>
+
     {% if user.profile.img %}
         <img src="{{user.profile.img}}" alt="{{user.username}}" />
     {% else %}

@@ -1,3 +1,19 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+
+.navlogo{
+    font-family: "Prata", "Helvetica Neue", Helvetica, Arial, serif;
+    font-weight: 800;
+}
+.nav-item{
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
 .image_city{
     display: flex;
     flex-direction: row-reverse;
@@ -18,11 +34,14 @@
 }
 
 #discovercard_img {
-    max-width: 500px;
-    max-height: 500px;
+    background-size: contain;
+    width: 300px;
+    height: 200px;
+    border-radius: 5px;
 }
 #discover_city{
     margin: 5%;
+    font-family: "Prata", "Helvetica Neue", Helvetica, Arial, serif;
 }
 #discover_post_container{
     max-height: 30em;
