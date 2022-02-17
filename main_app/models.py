@@ -29,6 +29,10 @@ class Location (models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
     description = models.CharField(max_length=250, default="")
+<<<<<<< HEAD
+=======
+    description = models.CharField(max_length=250, default = "")
+>>>>>>> 74b08d04af6b8aa7513265f779f4d1aeaea8e64c
     img = ImageField(blank=True, manual_crop="")
     
     def __str__(self):

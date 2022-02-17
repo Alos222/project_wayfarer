@@ -23,7 +23,10 @@ class Home(TemplateView):
     def get(self, request, **kwargs):
         context = createAuthForms()
         return render(request, 'home.html', context)
-        
+
+class About(TemplateView):
+    template_name = 'about.html'
+
 class Discover(TemplateView):
     template_name = 'discover.html'
 
@@ -35,7 +38,7 @@ class Discover(TemplateView):
             context['post'] = Post.objects.filter(name__icontains=city)
         else: 
             context['locations'] = Location.objects.all()
-            context['posts'] = Post.objects.all()
+            context['posts'] = Post.objects.all().order_by('-date')
             
         context.update(createAuthForms())
         context['post_form'] = CreatePostForm()
@@ -101,7 +104,7 @@ class CreatePost(CreateView):
         if post_form.is_valid():
             Post.objects.create(**post_form.cleaned_data)
         return redirect('/discover')
-    
+
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'
