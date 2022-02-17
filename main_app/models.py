@@ -28,20 +28,16 @@ def save_profile(sender, instance, **kwargs):
 class Location (models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
-<<<<<<< HEAD
-    description = models.CharField(max_length=250, default="")
-=======
     description = models.CharField(max_length=250, default = "")
->>>>>>> dev2
     img = ImageField(blank=True, manual_crop="")
     
     def __str__(self):
         return "{}, {}".format(self.city, self.country)
     
 class Post(models.Model):
-    title = models.CharField(max_length=200)
+    title = models.CharField(blank=False, max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
-    content = models.CharField(max_length=2000)
+    content = models.CharField(blank=False, max_length=2000)
     content_img = ImageField(blank=True, manual_crop="")
     location = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="posts")
     date = models.DateField(auto_now_add=True)
