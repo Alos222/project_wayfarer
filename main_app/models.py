@@ -11,6 +11,10 @@ class Profile(models.Model):
     country = models.CharField(max_length=100)
     img = ImageField(blank=True, manual_crop="")
     
+    def __str__(self):
+        return self.user.username
+        
+    
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
@@ -23,8 +27,11 @@ def save_profile(sender, instance, **kwargs):
 class Location (models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
-    description = models.CharField(max_length=250, default = "")
+    description = models.CharField(max_length=250, default="")
     img = ImageField(blank=True, manual_crop="")
+    
+    def __str__(self):
+        return "{}, {}".format(self.city, self.country)
     
 class Post(models.Model):
     title = models.CharField(max_length=200)
