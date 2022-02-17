@@ -19,7 +19,7 @@ class UpdatePostForm(forms.ModelForm):
 class CreatePostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'content_img', 'user', 'location']
+        fields = ['title', 'content', 'content_img', 'location']
         
 class UserCreateForm(UserCreationForm):
     username = forms.CharField(required=True)
