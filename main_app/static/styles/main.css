@@ -1,0 +1,107 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poiret+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Prata&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
+.aboutimg{
+    max-width: 200px;
+    max-height: 200px;
+}
+.titleanchor{
+    max-width: 20em;
+    max-height: 3em;
+}
+.navlogo{
+    font-family: "Prata", "Helvetica Neue", Helvetica, Arial, serif;
+    font-weight: 800;
+}
+.nav-item{
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+}
+
+.image_city{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-top: 5px;
+    border-bottom: .5px solid rgba(139, 139, 139, 0.445);
+}
+
+
+#discover_container{
+    padding-top: 2%;
+}
+
+#discover_img {
+    width: 200px;
+    height: 150px;
+    padding-top: 10%;
+ 
+}
+
+#discovercard_img {
+    background-size: contain;
+    width: 300px;
+    height: 200px;
+}
+#discover_city{
+    margin: 5%;
+    font-family: "Prata", "Helvetica Neue", Helvetica, Arial, serif;
+}
+#discover_post_container{
+    max-height: 30em;
+    border: .5px solid rgba(139, 139, 139, 0.445);
+    border-radius: 5px;
+}
+
+.post_img{
+    max-width: 200px;
+    max-height: 200px;
+    margin-top: 1em;
+}
+
+.post_title{
+    margin-top: 1em;
+    font-weight: bolder;
+}
+.postsignature{
+    margin-left: 12.5em;
+    margin-bottom: 1em;
+    max-width: 12em;
+}
+.city_list{
+    max-height: 40em;
+    min-width: 30em;
+}
+
+.profile-post{
+    text-decoration: none;
+    font-weight: bolder;
+    color: black;
+}
+
+.navbar-brand {
+    margin-left: 1em;
+}
+
+.location_post{
+    margin-left: 5px;
+    border-bottom: .5px solid rgba(139, 139, 139, 0.445);
+    max-width: 38em;
+}
+
+.discovercardcontent{
+    margin-left: 2em;
+    margin-top: 0em;
+}
+
+.userid{
+    color:rgba(1, 94, 201, 0.918)
+}
+
+.post-title-link {
+    text-decoration: none;
+    font-weight: bolder;
+}

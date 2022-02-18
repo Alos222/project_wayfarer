@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block formscript%}
+    {{profile_form.media}}
+{% endblock %}
+
+
+{% block content %}
+<h1 class='pt-3'>Update Profile</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{profile_form.as_p}}
+    <input type="submit" value="Update">
+</form>
+{% endblock %}

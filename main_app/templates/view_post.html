@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="detail__img">
+        {% if post.content_img %}
+    <img class="img-fluid" src="{{post.content_img}}" alt="{{post.title}}">
+        {% else %}
+    <img class="img-fluid" src="{% static 'assets/default_photo.png'%}">
+        {% endif %}
+    </div>
+
+    <div class="detail__name">
+        <h1 class="title">{{post.title}}</h1>
+    </div>
+
+    <div class="detail__container">
+
+        {% if user.is_authenticated and user == post.user%}
+            <div class="buttons">
+                <a href="{% url 'post_update' post.pk %}" class="btn btn-primary">Update
+                    <span class="icon">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                </a>
+                <a href="{% url 'post_delete_confirmation' post.pk %}" class="btn btn-danger">Delete
+                    <span class="icon">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                </a>
+            </div>
+        {% endif %}
+
+        <div class="content">
+            {{post.content}}
+        </div>
+    </div>
+{% endblock %} 

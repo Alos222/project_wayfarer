@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block content %}
+    <div class="">
+        <h3>Hello {{user.username}}!</h3></br>
+        {% if user.profile.img %}
+            <img src="{{user.profile.img}}" alt="{{user.username}}" />
+        {% else %}
+            <img src="{% static 'assets/default_photo.png' %}" alt="Default Profile Photo" />
+        {% endif %}
+    </div>
+    <div>
+        <h2>Would you like to add a new post?</h2>
+    </div>
+    <div>
+        <form action="{% url create_post %}" method="post">
+        <!-- Security Feature  -->
+            {% csrf_token %} 
+        <!--  Generate inputs  -->
+            {{form.as_p}} 
+        <!--  Submit form  -->
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+{% endblock %}
