@@ -52,10 +52,15 @@
 }
 #discover_post_container{
     max-height: 30em;
+    max-width: 50em;
     border: .5px solid rgba(139, 139, 139, 0.445);
     border-radius: 5px;
 }
 
+#postbutton{
+    border-radius: 100%;
+    margin-bottom: 1em;
+}
 .post_img{
     max-width: 200px;
     max-height: 200px;
