@@ -107,6 +107,21 @@ class CreatePost(CreateView):
             Post.objects.create(**data)
         return redirect('/discover')
 
+class UpdatePost(UpdateView):
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'post_update.html'
+    success_url = '/discover'##create post update page.
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        context['post_form'] = UpdatePostForm()
+        return context
+
+    def get_success_url(self):
+        return reverse('view_post', kwargs={'pk': self.object.pk})
+
 class ViewPost(DetailView):
     model = Post
     template_name = 'view_post.html'

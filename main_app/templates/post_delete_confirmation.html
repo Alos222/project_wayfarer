@@ -1,11 +1,17 @@
 {% extends 'base.html' %} 
 {% block title %}- Delete {% endblock %}
 {% block content %}
+{% load static %}
+
 <div class="detail__img">
-    <img src="{{post.content_img}}" alt="{{post.title}}" />
+    {% if post.content_img %}
+    <img class="img-fluid" src="{{post.content_img}}" alt="{{post.title}}">
+        {% else %}
+    <img class="img-fluid" src="{% static 'assets/default_photo.png'%}">
+        {% endif %}
 </div>
-<h2 class="title pt-5">Are you sure you want to delete your post?</h2>
-<h1 class="title pt-5">"{{post.title}}"</h1>
+<p class="title pt-5">Are you sure you want to delete your post?</p>
+<p class="title pt-5">"{{post.title}}"</p>
 </br>
 <div>
     <form method="post">
