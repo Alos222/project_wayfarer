@@ -1,7 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static %}
+
     <div class="detail__img">
-        <img src="{{post.content_img}}" alt="{{post.title}}" />
+        {% if post.content_img %}
+    <img class="img-fluid" src="{{post.content_img}}" alt="{{post.title}}">
+        {% else %}
+    <img class="img-fluid" src="{% static 'assets/default_photo.png'%}">
+        {% endif %}
     </div>
 
     <div class="detail__name">

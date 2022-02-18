@@ -105,35 +105,52 @@ class CreatePost(CreateView):
             # post.save()
         return redirect('/discover')
 
-   
+
 class UpdatePost(UpdateView):
-	def get(self, request, **kwargs):
-		print(request.user.id)
-		if request.user.is_authenticated and request.user.username == kwargs['username']:
-			post_form = UpdatePostForm()
-			context = {
-				'post_form' : post_form
-			}
-			return render(request, 'post_update.html', context)
-		else:
-			return redirect('/')
+    model = Post
+    fields = ['title', 'content', 'content_img', 'location']
+    template_name = 'post_update.html'
+    success_url = '/discover'##create post update page.
 
-	def post(self, request, **kwargs):    
-		if request.user.is_authenticated:
-			if request.user.username != kwargs['username']:  
-				return redirect('profile', kwargs['username'])
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(createAuthForms())
+        context['post_form'] = UpdatePostForm()
+        return context
 
-			post_form = UpdatePostForm(request.POST, instance=request.user)
+    def get_success_url(self):
+        return reverse('view_post', kwargs={'pk': self.object.pk})
+
+
+#########################
+# class UpdatePost(UpdateView):
+# 	def get(self, request, **kwargs):
+# 		print(request.user.id)
+# 		if request.user.is_authenticated and request.user.username == kwargs['username']:
+# 			post_form = UpdatePostForm()
+# 			context = {
+# 				'post_form' : post_form
+# 			}
+# 			return render(request, 'post_update.html', context)
+# 		else:
+# 			return redirect('/')
+
+# 	def post(self, request, **kwargs):    
+# 		if request.user.is_authenticated:
+# 			if request.user.username != kwargs['username']:  
+# 				return redirect('profile', kwargs['username'])
+
+# 			post_form = UpdatePostForm(request.POST, instance=request.user)
       
-			if post_form.is_valid():
-				post_form.save()
-				return redirect('/discover', kwargs['username'])
-		else:
-			return redirect('/accounts/login')
+# 			if post_form.is_valid():
+# 				post_form.save()
+# 				return redirect('/discover', kwargs['username'])
+# 		else:
+# 			return redirect('/accounts/login')
 
-	def get_success_url(self):
-		return reverse('view_post', kwargs={'pk': self.object.pk})     
-
+# 	def get_success_url(self):
+# 		return reverse('view_post', kwargs={'pk': self.object.pk})     
+#####################
 
 class ViewPost(DetailView):
     model = Post
