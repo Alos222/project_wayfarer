@@ -1,8 +1,5 @@
 {% extends 'base.html' %} 
-{% block formscript %} 
-    {{post_form.media}}
-{% endblock %}
-{% block title %}- Update Post {% endblock %}
+{% load static %}
 
 {% block formscript %}
     {{post_form.media}}
@@ -10,25 +7,28 @@
 
 {% block content %}
 <div class="detail__img">
-    <img src="{{post.content_img}}" alt="{{post.title}}" />
+    {% if post.content_img %}
+    <img class="img-fluid" src="{{post.content_img}}" alt="{{post.title}}">
+        {% else %}
+    <img class="img-fluid" src="{% static 'assets/default_photo.png'%}">
+        {% endif %}
 </div>
+
 <div>
-<h2 class="pt-3">Update Post</h2>
-<h1 class="pt-3"> {{post.title}}</h1>
+    <h2 class="pt-3">Update Post</h2>
+    <h1 class="pt-3"> {{post.title}}</h1>
 </div>
+
 <div>
-
-<form action="" method="post">
-<!-- Security Feature  -->
-    {% csrf_token %} 
-<!--  Generate inputs  -->
-    {{post_form.as_p}} 
-<!--  Submit form  -->
-    <input type="submit" value="Submit" />
-</form>
-
-</br>
-</br>
+    <form action="{% url 'post_update' post.pk %}" method="post">
+    <!-- Security Feature  -->
+        {% csrf_token %} 
+    <!--  Generate inputs  -->
+        {{post_form.as_p}} 
+    <!--  Submit form  -->
+        <input type="submit" value="Submit" />
+    </form>
+    </br></br>
 </div>
 {% endblock %}
 
