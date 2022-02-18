@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block formscript %} 
     {{post_form.media}}
 {% endblock %}
@@ -22,10 +22,24 @@
                         {% for post in posts %}
                         {% if post.location.pk == location.pk %}
                             <div class="row location_post d-none">
-                            <img src="{{post.content_img}}" class="post_img .img-fluid col-sm-4" id="post_img"/>
-                            <h5 class="post_title col-sm-8">{{post.title}}</h5>
-                            <p class="col-sm-8 discovercardcontent">{{post.content}}</p>
-                            <p class="postsignature">posted by <span class="userid">{{post.user}}<span></p>
+
+                                <div class="col-4">
+                                    {% if post.content_img %}
+                                        <img src="{{post.content_img}}" class="post_img img-fluid" id="post_img"/>
+                                    {% else %}
+                                        <div class="col-sm-4">
+                                            <img class="img-fluid" src={% static 'assets/default_photo.png'%}>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="mt-2 col-8">
+                                    <a class= "post-title-link" href="{% url 'view_post' post.pk %}">
+                                        <p class="discovercardcontent post_title">{{post.title}}</p>
+                                    </a>
+                                    <p class="discovercardcontent">{{post.content}}</p>
+                                    <p class="discovercardcontent postsignature">posted by <span class="userid">{{post.user}}<span></p>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}
