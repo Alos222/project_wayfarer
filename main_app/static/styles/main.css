@@ -110,3 +110,8 @@
     text-decoration: none;
     font-weight: bolder;
 }
+
+#postbutton{
+    border-radius: 100%;
+    margin-bottom: 1em;
+}
