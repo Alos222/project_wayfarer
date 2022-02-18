@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import django_heroku
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -21,18 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Setup env variables
 env_path = Path('.')/'.env'
 load_dotenv(dotenv_path=env_path)
-DB_USER = os.getenv('PSQL_USERNAME')
-DB_PWD = os.getenv('PSQL_PASSWORD')
-UC_PUBLIC = os.getenv('UPLOADCARE_PUBLICKEY')
-UC_SECRET = os.getenv('UPLOADCARE_SECRETKEY')
-
+DB_USER = os.environ.get('PSQL_USERNAME')
+DB_PWD = os.environ.get('PSQL_PASSWORD')
+UC_PUBLIC = os.environ.get('UPLOADCARE_PUBLICKEY')
+UC_SECRET = os.environ.get('UPLOADCARE_SECRETKEY')
+DJ_SECRET = os.environ.get('DJ_SECRET')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-635=k_v+nsxg2)kbib=h%jcmn&!)s@1dk9@_=bj9!q27$ozgda'
+SECRET_KEY = DJ_SECRET
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -145,3 +146,5 @@ UPLOADCARE = {
 
 LOGIN_REDIRECT_URL = '/user/'
 LOGOUT_REDIRECT_URL = '/'
+
+django_heroku.settings(locals())
