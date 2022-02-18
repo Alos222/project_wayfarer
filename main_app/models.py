@@ -29,7 +29,6 @@ class Location (models.Model):
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=100)
     description = models.CharField(max_length=250, default="")
-    description = models.CharField(max_length=250, default = "")
     img = ImageField(blank=True, manual_crop="")
     
     def __str__(self):

@@ -63,8 +63,8 @@
 }
 
 .post_title{
-    margin-top: .5em;
-    font-size: 20px;
+    margin-top: 1em;
+    font-weight: bolder;
 }
 .postsignature{
     margin-left: 12.5em;
@@ -93,10 +93,15 @@
 }
 
 .discovercardcontent{
-    margin-left: 12.5em;
-    margin-top: -5em;
+    margin-left: 2em;
+    margin-top: 0em;
 }
 
 .userid{
     color:rgba(1, 94, 201, 0.918)
+}
+
+.post-title-link {
+    text-decoration: none;
+    font-weight: bolder;
 }
